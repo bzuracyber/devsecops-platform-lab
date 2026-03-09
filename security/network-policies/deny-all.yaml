@@ -1,0 +1,28 @@
+# Default deny all — explicit allow only
+# Mirrors DoD network segmentation and zero trust principles
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+  namespace: podinfo
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+---
+# Explicit allow for podinfo only
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-podinfo
+  namespace: podinfo
+spec:
+  podSelector:
+    matchLabels:
+      app: podinfo
+  policyTypes:
+  - Ingress
+  ingress:
+  - ports:
+    - port: 9898

@@ -1,0 +1,10 @@
+# Terraform sensitive files — never commit these
+terraform/*.tfvars
+terraform/.terraform/
+terraform/*.tfstate
+terraform/*.tfstate.backup
+terraform/.terraform.lock.hcl
+
+# SSH keys if accidentally placed in project
+*.pem
+*.key

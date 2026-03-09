@@ -1,0 +1,24 @@
+# Read-only role — mirrors DoD need-to-know principle
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: podinfo
+  name: podinfo-reader
+rules:
+- apiGroups: [""]
+  resources: ["pods", "services"]
+  verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: podinfo-reader-binding
+  namespace: podinfo
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: podinfo
+roleRef:
+  kind: Role
+  name: podinfo-reader
+  apiGroup: rbac.authorization.k8s.io
