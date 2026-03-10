@@ -460,3 +460,5 @@ In a production environment every one of these would be remediated.
 | S3 no event notifications (CKV2_AWS_62) | Not needed for lab | Add SNS/SQS notifications |
 | VPC no flow logs (CKV2_AWS_11) | Added cost and complexity | Enable VPC flow logs to S3 |
 | Default VPC SG not restricted (CKV2_AWS_12) | Lab environment | Explicitly restrict default SG |
+
+| No NetworkPolicy associated (CKV2_K8S_6) | False positive — NetworkPolicy exists in security/network-policies/deny-all.yaml | No action needed |

@@ -5,6 +5,11 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+  security-events: write
+  actions: read
+
 jobs:
   terraform-scan:
     name: Terraform Security Scan
@@ -47,14 +52,14 @@ jobs:
       - name: Trivy Image Scan
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: 'ghcr.io/stefanprodan/podinfo:latest'
+          image-ref: 'ghcr.io/stefanprodan/podinfo@sha256:c04843c796025fbaa2574344994cb2461041b5e1d6b7a0de76b2b9fa46318e08'
           format: 'sarif'
           output: 'trivy-results.sarif'
           severity: 'CRITICAL,HIGH'
           exit-code: '1'
 
       - name: Upload Trivy Results
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         if: always()
         with:
           sarif_file: 'trivy-results.sarif'
