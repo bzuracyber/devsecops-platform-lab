@@ -98,6 +98,12 @@ resource "aws_instance" "control_plane" {
     cpu_credits = "standard"
   }
 
+  monitoring = true
+
+  root_block_device {
+    encrypted = true
+  }
+
   tags = {
     Name = "k8s-control-plane"
     Role = "control-plane"
@@ -120,6 +126,12 @@ resource "aws_instance" "worker" {
 
   credit_specification {
     cpu_credits = "standard"
+  }
+
+  monitoring = true
+
+  root_block_device {
+    encrypted = true
   }
 
   metadata_options {
