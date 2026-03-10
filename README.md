@@ -460,5 +460,5 @@ In a production environment every one of these would be remediated.
 | S3 no event notifications (CKV2_AWS_62) | Not needed for lab | Add SNS/SQS notifications |
 | VPC no flow logs (CKV2_AWS_11) | Added cost and complexity | Enable VPC flow logs to S3 |
 | Default VPC SG not restricted (CKV2_AWS_12) | Lab environment | Explicitly restrict default SG |
-
 | No NetworkPolicy associated (CKV2_K8S_6) | False positive — NetworkPolicy exists in security/network-policies/deny-all.yaml | No action needed |
+| Upstream image CVEs (Trivy) | 14 CVEs in podinfo base image including OpenSSL and Go stdlib vulnerabilities. All are upstream dependencies outside our control. Fixed versions exist but require upstream image rebuild by maintainer. | Pin to updated image digest when maintainer releases patched version. Tracked via automated Trivy scan on every commit. |
