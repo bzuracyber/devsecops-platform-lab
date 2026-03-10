@@ -52,7 +52,7 @@ jobs:
       - name: Trivy Image Scan
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: 'ghcr.io/stefanprodan/podinfo@sha256:c04843c796025fbaa2574344994cb2461041b5e1d6b7a0de76b2b9fa46318e08'
+          image-ref: 'ghcr.io/stefanprodan/podinfo@sha256:d2b3cd93a48acdc91327533ce28fcb3169b2d9feaf73817dc2eb68858df64edb'
           format: 'sarif'
           output: 'trivy-results.sarif'
           severity: 'CRITICAL,HIGH'
