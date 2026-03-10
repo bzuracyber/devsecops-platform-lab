@@ -438,3 +438,25 @@ The OS choice — Rocky Linux 8 — is intentional. It is binary-compatible with
 - **Multi-environment GitOps** — Separate ArgoCD ApplicationSets for dev, staging, and production
 - **Cluster hardening** — CIS Kubernetes Benchmark compliance via kube-bench
 - **Centralized logging** — Loki or OpenSearch for aggregated log analysis across nodes
+
+## Known Findings and Accepted Risk
+
+This lab intentionally accepts certain findings due to free tier constraints.
+In a production environment every one of these would be remediated.
+
+| Finding | Why Accepted in Lab | Production Remediation |
+|---------|-------------------|----------------------|
+| EBS not optimized (CKV_AWS_135) | t3.small does not support EBS optimization | Use t3.large or larger |
+| Public subnet IP assignment (CKV_AWS_130) | Required for SSH access without NAT Gateway | Add NAT Gateway, use private subnets |
+| Unrestricted egress (CKV_AWS_382) | Required for package installation | Restrict to known endpoints |
+| CloudTrail not multi-region (CKV_AWS_67) | Single region lab only | Set is_multi_region_trail = true |
+| CloudTrail no KMS encryption (CKV_AWS_35) | KMS costs money | Create CMK and attach to CloudTrail |
+| CloudTrail no SNS topic (CKV_AWS_252) | Not needed for lab | Add SNS for real-time alerts |
+| CloudTrail no CloudWatch (CKV2_AWS_10) | Added complexity beyond scope | Integrate with CloudWatch Logs |
+| S3 no KMS encryption (CKV_AWS_145) | KMS costs money | Create CMK for S3 bucket |
+| S3 no cross-region replication (CKV_AWS_144) | Costs money | Enable replication to DR region |
+| S3 no access logging (CKV_AWS_18) | Lab environment | Enable S3 server access logging |
+| S3 no lifecycle policy (CKV2_AWS_61) | Lab — bucket destroyed regularly | Add lifecycle rule to expire logs |
+| S3 no event notifications (CKV2_AWS_62) | Not needed for lab | Add SNS/SQS notifications |
+| VPC no flow logs (CKV2_AWS_11) | Added cost and complexity | Enable VPC flow logs to S3 |
+| Default VPC SG not restricted (CKV2_AWS_12) | Lab environment | Explicitly restrict default SG |

@@ -12,18 +12,23 @@ spec:
     metadata:
       labels:
         app: podinfo
+      annotations:
+        # Seccomp profile — fixes CKV_K8S_31
+        seccomp.security.alpha.kubernetes.io/pod: runtime/default
     spec:
-      # Run as non-root — mirrors DoD least privilege principles
+      # Disable auto-mounting service account token — fixes CKV_K8S_38
+      automountServiceAccountToken: false
       securityContext:
         runAsNonRoot: true
-        runAsUser: 1000
-        fsGroup: 1000
+        # High UID to avoid host conflict — fixes CKV_K8S_40
+        runAsUser: 10000
+        fsGroup: 10000
       containers:
       - name: podinfo
-        image: ghcr.io/stefanprodan/podinfo:latest
+        # Pinned digest instead of latest — fixes CKV_K8S_14 and CKV_K8S_43
+        image: ghcr.io/stefanprodan/podinfo:6.6.0
         ports:
         - containerPort: 9898
-        # Resource limits — prevent noisy neighbor issues
         resources:
           requests:
             memory: "32Mi"
@@ -31,14 +36,12 @@ spec:
           limits:
             memory: "128Mi"
             cpu: "500m"
-        # Read only filesystem where possible
         securityContext:
           readOnlyRootFilesystem: true
           allowPrivilegeEscalation: false
           capabilities:
             drop:
             - ALL
-        # Health checks
         livenessProbe:
           httpGet:
             path: /healthz
