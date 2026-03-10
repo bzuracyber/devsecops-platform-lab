@@ -26,7 +26,8 @@ spec:
       containers:
       - name: podinfo
         # Pinned digest instead of latest — fixes CKV_K8S_14 and CKV_K8S_43
-        image: ghcr.io/stefanprodan/podinfo:6.6.0
+        image: ghcr.io/stefanprodan/podinfo@sha256:c04843c796025fbaa2574344994cb2461041b5e1d6b7a0de76b2b9fa46318e08
+        imagePullPolicy: Always
         ports:
         - containerPort: 9898
         resources:
