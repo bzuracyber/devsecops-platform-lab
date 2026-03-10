@@ -66,10 +66,11 @@ jobs:
           exit-code: '1'
 
       - name: Upload Trivy Results
-        uses: github/codeql-action/upload-sarif@v4
+        uses: github/codeql-action/upload-sarif@v3
         if: always()
         with:
           sarif_file: 'trivy-results.sarif'
+        continue-on-error: true
 
   secret-scan:
     name: Secret Detection
