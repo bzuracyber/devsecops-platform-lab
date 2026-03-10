@@ -102,6 +102,11 @@ resource "aws_instance" "control_plane" {
     Name = "k8s-control-plane"
     Role = "control-plane"
   }
+  metadata_options {
+  http_endpoint               = "enabled"
+  http_tokens                 = "required"
+  http_put_response_hop_limit = 1
+  }
 }
 
 # Worker Node
@@ -115,6 +120,12 @@ resource "aws_instance" "worker" {
 
   credit_specification {
     cpu_credits = "standard"
+  }
+
+  metadata_options {
+  http_endpoint               = "enabled"
+  http_tokens                 = "required"
+  http_put_response_hop_limit = 1
   }
 
   tags = {
