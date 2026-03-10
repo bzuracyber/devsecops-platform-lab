@@ -88,7 +88,7 @@ resource "aws_key_pair" "lab" {
 # Control Plane
 resource "aws_instance" "control_plane" {
   ami                    = data.aws_ami.rocky8.id
-  instance_type          = "t3.micro"
+  instance_type          = "t3.small"
   subnet_id              = aws_subnet.lab.id
   vpc_security_group_ids = [aws_security_group.k8s.id]
   key_name               = aws_key_pair.lab.key_name
@@ -107,7 +107,7 @@ resource "aws_instance" "control_plane" {
 # Worker Node
 resource "aws_instance" "worker" {
   ami                    = data.aws_ami.rocky8.id
-  instance_type          = "t3.micro"
+  instance_type          = "t3.small"
   subnet_id              = aws_subnet.lab.id
   vpc_security_group_ids = [aws_security_group.k8s.id]
   key_name               = aws_key_pair.lab.key_name
